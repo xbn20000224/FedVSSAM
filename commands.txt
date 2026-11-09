@@ -1,0 +1,37 @@
+# CIFAR-10/100 training commands.
+# Run from the repository root.
+# The default method list runs all 13 paper methods. Add --algos FedVSSAM for a single method.
+# Use another --save_dir for every seed and rerun: original filenames do not include the seed.
+# Shared --lr does not replace FedProx/FedAdam/FedACG method-specific LR defaults.
+# FedVSSAM server step: 4. Default local mixing coefficient: 0.1.
+
+# K=40 example from the submitted README.
+python main.py --num_users 100 --epochs 800 --n_epochs 40 --local_bs 128 --dataset cifar10 --lr 0.1 --alpha 0.5 --gpu 0 --user_subset 10 --gamma_lr 1 --save_dir ./save_cifar10_original_seed1
+
+# K=10 configurations: evaluate every round; target accuracy 75%/40%.
+# Example common learning rate: 0.1; method-specific client learning rates keep their own defaults.
+# Local mixing coefficient: 0.4 for moderate heterogeneity and 0.1 for severe heterogeneity.
+
+# CIFAR10
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N100_dir0p5_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.1 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N100_dir0p1_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 6 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N100_path6_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 3 --alpha 0.5 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N100_path3_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N200_dir0p5_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.1 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N200_dir0p1_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 6 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N200_path6_seed1
+python main.py --dataset cifar10 --model cnn --num_classes 10 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 128 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 3 --alpha 0.5 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 75 --seed 1 --gpu 0 --save_dir ./save_cifar10_N200_path3_seed1
+
+# CIFAR100
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N100_dir0p5_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.1 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N100_dir0p1_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 20 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N100_path20_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 100 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 10 --alpha 0.5 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N100_path10_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N200_dir0p5_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --alpha 0.1 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N200_dir0p1_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 20 --alpha 0.5 --fedvssam_gamma_l 0.4 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N200_path20_seed1
+python main.py --dataset cifar100 --model cnn --num_classes 100 --num_users 200 --user_subset 10 --epochs 800 --n_epochs 10 --local_bs 20 --lr 0.1 --gamma_lr 1 --weight_decay 0 --pathological --num_classes_per_user 10 --alpha 0.5 --fedvssam_gamma_l 0.1 --eval_interval 1 --target_acc 40 --seed 1 --gpu 0 --save_dir ./save_cifar100_N200_path10_seed1
+
+# Summaries and plots for the K=40 example (run after training).
+python compute_rd_table.py --save_dir ./save_cifar10_original_seed1 --out_csv ./save_cifar10_original_seed1/rd_table.csv --out_md ./save_cifar10_original_seed1/rd_table.md
+python -c "from plot_all_acc import plot_all_algos; plot_all_algos('./save_cifar10_original_seed1', 'data_non-iid_set_cifar10_noniid_0.5_c_2_M_100_S_10_lr_0.1_n_ep_40_mtcl_1')"
